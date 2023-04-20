@@ -12,7 +12,8 @@ public abstract class BaseControllerImpl <E extends Base, S extends BaseServiceI
     @Autowired
     protected S service;
 
-    @GetMapping("/")
+
+    @GetMapping("/bd/all")
     public ResponseEntity<?> getAll() {
         try {
             return new ResponseEntity<>(service.findAll(), null, 200);
@@ -22,7 +23,7 @@ public abstract class BaseControllerImpl <E extends Base, S extends BaseServiceI
         }
    }
 
-    @GetMapping("/{id}")
+    @GetMapping("/bd/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(service.findById(id), null, 200);
@@ -32,7 +33,7 @@ public abstract class BaseControllerImpl <E extends Base, S extends BaseServiceI
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/bd/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(service.delete(id), null, 200);
