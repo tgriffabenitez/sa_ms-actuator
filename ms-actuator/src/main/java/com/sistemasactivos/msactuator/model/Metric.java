@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -21,6 +23,10 @@ public class Metric extends Base {
     private String description;
 
     private String baseUnit;
+
+    private String ms;
+
+    private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "metric_id")
