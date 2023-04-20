@@ -12,19 +12,39 @@ public class MetricServiceImpl extends BaseServiceImpl<Metric, Long>{
 
     @Autowired
     @Qualifier("ms-persona")
-    private WebClient webClient;
+    private WebClient webClientPersona;
+
+    @Autowired
+    @Qualifier("ms-categoria")
+    private WebClient webClientCategoria;
 
     public MetricServiceImpl(BaseRepository<Metric, Long> baseRepository) {
         super(baseRepository);
     }
 
-    public Metric getDiskTotal() throws Exception {
+    public Metric getMetric(String uri, String ms) throws Exception {
+        WebClient webClient;
+
+        // verifico cual es el microservicio que me esta pidiendo la metrica
+        // y creo el webclient correspondiente
+        if (ms.equals("ms-persona")) {
+             webClient = webClientPersona;
+        } else if (ms.equals("ms-categoria")) {
+            webClient = webClientCategoria;
+        } else {
+            throw new Exception("No existe el microservicio");
+        }
+
         Metric metric = webClient.get()
-                .uri("/disk.total")
+                .uri("/" + uri)
                 .retrieve()
                 .bodyToMono(Metric.class)
                 .block();
 
+        metric.setMs(ms);
+
+        // guardo el metric en la base de datos
         return this.save(metric);
     }
+
 }
