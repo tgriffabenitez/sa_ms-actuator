@@ -2,9 +2,11 @@ package com.sistemasactivos.msactuator.service;
 
 import com.sistemasactivos.msactuator.model.Base;
 import com.sistemasactivos.msactuator.repository.BaseRepository;
+import jakarta.transaction.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class BaseServiceImpl <E extends Base, ID extends Serializable> implements BaseService<E, ID> {
 
@@ -16,26 +18,38 @@ public abstract class BaseServiceImpl <E extends Base, ID extends Serializable> 
 
     @Override
     public List<E> findAll() throws Exception {
-        return null;
+        try {
+            return baseRepository.findAll();
+
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
     public E findById(ID id) throws Exception {
-        return null;
+        try {
+            Optional<E> optional = baseRepository.findById(id);
+            return optional.orElse(null);
+
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
+    @Transactional
     public E save(E entity) throws Exception {
-        return null;
-    }
-
-    @Override
-    public E update(ID id, E entity) throws Exception {
-        return null;
+        try {
+            return baseRepository.save(entity);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
     public boolean delete(ID id) throws Exception {
         return false;
     }
+
 }
