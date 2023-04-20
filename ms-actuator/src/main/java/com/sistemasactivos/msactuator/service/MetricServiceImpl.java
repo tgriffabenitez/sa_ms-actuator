@@ -41,6 +41,9 @@ public class MetricServiceImpl extends BaseServiceImpl<Metric, Long>{
                 .bodyToMono(Metric.class)
                 .block();
 
+        if (metric == null)
+            throw new Exception("No existe la metrica");
+
         metric.setMs(ms);
 
         // guardo el metric en la base de datos
