@@ -120,7 +120,7 @@ public class MetricServiceImpl extends BaseServiceImpl<Metric, Long>{
     @Scheduled(fixedRate = 1000)
     public void getMetricSystemCpuUsagePersona() {
         try {
-            Metric metric = getMetric(URI_MEMORY_USED, MS_PERSONA, webClientPersona);
+            Metric metric = getMetric(URI_CPU_USAGE, MS_PERSONA, webClientPersona);
             if (metric != null)
                 save(metric);
 
@@ -135,7 +135,7 @@ public class MetricServiceImpl extends BaseServiceImpl<Metric, Long>{
     @Scheduled(fixedRate = 1000)
     public void getMetricSystemCpuUsageCategoria() {
         try {
-            Metric metric = getMetric(URI_MEMORY_USED, MS_CATEGORIA, webClientCategoria);
+            Metric metric = getMetric(URI_CPU_USAGE, MS_CATEGORIA, webClientCategoria);
             if (metric != null)
                 save(metric);
 
