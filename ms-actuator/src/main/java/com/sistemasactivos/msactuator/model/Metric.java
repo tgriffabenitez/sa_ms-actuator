@@ -26,7 +26,7 @@ public class Metric extends Base {
 
     private String ms;
 
-    private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    private LocalDateTime date = LocalDateTime.now();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "metric_id")
