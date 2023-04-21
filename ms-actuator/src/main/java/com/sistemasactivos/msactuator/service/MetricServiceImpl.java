@@ -29,6 +29,7 @@ public class MetricServiceImpl extends BaseServiceImpl<Metric, Long>{
     private static final String MS_CATEGORIA = "ms-categoria";
     private static final String URI_DISK_TOTAL = "/disk.total";
     private static final String URI_MEMORY_USED = "/jvm.memory.used";
+    private static final String URI_CPU_USAGE = "/system.cpu.usage";
 
 
     // En casode no poder establecer la conexión con el microservicio, se muestra un mensaje de error
@@ -71,7 +72,7 @@ public class MetricServiceImpl extends BaseServiceImpl<Metric, Long>{
         }
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1000)
     public void getMetricMemoryPersona() {
         try {
             Metric metric = getMetric(URI_MEMORY_USED, MS_PERSONA, webClientPersona);
@@ -86,7 +87,7 @@ public class MetricServiceImpl extends BaseServiceImpl<Metric, Long>{
         }
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1000)
     public void getMetricFreeDiskCategoria() {
         try {
             Metric metric = getMetric(URI_DISK_TOTAL, MS_CATEGORIA, webClientCategoria);
@@ -101,8 +102,38 @@ public class MetricServiceImpl extends BaseServiceImpl<Metric, Long>{
         }
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1000)
     public void getMetricMemoryCategoria() {
+        try {
+            Metric metric = getMetric(URI_MEMORY_USED, MS_CATEGORIA, webClientCategoria);
+            if (metric != null)
+                save(metric);
+
+            else
+                System.out.println("No se puedo realizar la consulta al microservicio " + MS_CATEGORIA);
+
+        } catch (Exception e) {
+            handleException(MS_CATEGORIA);
+        }
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void getMetricSystemCpuUsagePersona() {
+        try {
+            Metric metric = getMetric(URI_MEMORY_USED, MS_PERSONA, webClientPersona);
+            if (metric != null)
+                save(metric);
+
+            else
+                System.out.println("No se puedo realizar la consulta al microservicio " + MS_PERSONA);
+
+        } catch (Exception e) {
+            handleException(MS_PERSONA);
+        }
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void getMetricSystemCpuUsageCategoria() {
         try {
             Metric metric = getMetric(URI_MEMORY_USED, MS_CATEGORIA, webClientCategoria);
             if (metric != null)
