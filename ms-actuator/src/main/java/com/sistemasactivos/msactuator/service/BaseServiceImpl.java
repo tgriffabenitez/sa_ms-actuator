@@ -39,17 +39,12 @@ public abstract class BaseServiceImpl <E extends Base, ID extends Serializable> 
 
     @Override
     @Transactional
-    public E save(E entity) throws Exception {
+    public void save(E entity) throws Exception {
         try {
-            return baseRepository.save(entity);
+            baseRepository.save(entity);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
-    }
-
-    @Override
-    public boolean delete(ID id) throws Exception {
-        return false;
     }
 
 }

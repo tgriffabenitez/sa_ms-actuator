@@ -30,16 +30,6 @@ public abstract class BaseControllerImpl <E extends Base, S extends BaseServiceI
             return new ResponseEntity<>(e.getMessage(), null, 500);
         }
     }
-
-    @DeleteMapping("/bd/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        try {
-            return new ResponseEntity<>(service.delete(id), null, 200);
-
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), null, 500);
-        }
-    }
 }
 
 
