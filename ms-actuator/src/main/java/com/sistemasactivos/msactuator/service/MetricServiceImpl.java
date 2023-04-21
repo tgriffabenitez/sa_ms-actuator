@@ -102,14 +102,14 @@ public class MetricServiceImpl extends BaseServiceImpl<Metric, Long>{
     }
 
     @Scheduled(fixedRate = 10000)
-    public void getMetricMemoryCategoria() throws Exception {
+    public void getMetricMemoryCategoria() {
         try {
             Metric metric = getMetric(URI_MEMORY_USED, MS_CATEGORIA, webClientCategoria);
             if (metric != null)
                 save(metric);
 
             else
-                System.out.println("No se puedo realizar la consulta al microservicio " + MS_CATEGORIA + "");
+                System.out.println("No se puedo realizar la consulta al microservicio " + MS_CATEGORIA);
 
         } catch (Exception e) {
             handleException(MS_CATEGORIA);
